@@ -25,22 +25,28 @@ def crear_vectorstore(chunks):
 
 def cargar_vectorstore():
 
-    # Si no existe la carpeta de la base vectorial, la creamos automáticamente
-    if not CHROMA_PATH.exists():
+    print(f"📂 ¿Existe carpeta Chroma?: {CHROMA_PATH.exists()}")
+    print(f"📄 ¿Existe PDF?: {PDF_PATH.exists()}")
 
-        if not PDF_PATH.exists():
-            raise FileNotFoundError(
-                f"No se encontró el archivo PDF: {PDF_PATH}"
-            )
+    if not CHROMA_PATH.exists():
 
         print("📄 Creando base vectorial...")
 
+        if not PDF_PATH.exists():
+            raise FileNotFoundError(f"No se encontró el PDF: {PDF_PATH}")
+
         documentos = cargar_pdf(str(PDF_PATH))
+        print(f"📚 Páginas cargadas: {len(documentos)}")
+
         chunks = dividir_documentos(documentos)
+        print(f"✂️ Chunks generados: {len(chunks)}")
 
         crear_vectorstore(chunks)
 
-        print("✅ Base vectorial creada correctamente.")
+        print("✅ Base vectorial creada.")
+
+    else:
+        print("✅ Base vectorial ya existe.")
 
     return Chroma(
         persist_directory=str(CHROMA_PATH),
