@@ -12,7 +12,7 @@ embeddings = HuggingFaceEmbeddings(
 )
 
 CHROMA_PATH = Path("data/chroma")
-PDF_PATH = Path("data/knowledge_base/Lenguaje_señas_LSM.pdf")
+PDF_PATH = Path("data/knowledge_base/ManitasF_Base_de_Conocimiento_LSM.pdf")
 
 
 def crear_vectorstore(chunks):
