@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-#  Cargar Base Vectorial 
+# Cargar Base Vectorial
 
 try:
     cargar_vectorstore()
@@ -19,7 +19,7 @@ except Exception as e:
     st.error(f"No se pudo cargar la base vectorial.\n\n{e}")
     st.stop()
 
-# Sidebar 
+# Sidebar
 
 st.sidebar.title("🖐️ Manitas Felices AI")
 
@@ -32,7 +32,7 @@ pagina = st.sidebar.radio(
     ]
 )
 
-# Inicio 
+# Inicio
 
 if pagina == "🏠 Inicio":
 
@@ -54,7 +54,7 @@ Este proyecto utiliza la técnica **Retrieval-Augmented Generation (RAG)** para 
 Selecciona **Asistente IA** en el menú para comenzar.
 """)
 
-# Asistente 
+# Asistente
 
 elif pagina == "🤖 Asistente IA":
 
@@ -90,7 +90,7 @@ elif pagina == "🤖 Asistente IA":
 
             st.warning("Por favor, escribe una pregunta.")
 
-# Acerca 
+# Acerca
 
 elif pagina == "ℹ️ Acerca del proyecto":
 
@@ -111,7 +111,6 @@ elif pagina == "ℹ️ Acerca del proyecto":
 - ChromaDB
 - Sentence Transformers
 - Google Gemini
-- Oracle Cloud Infrastructure (OCI)
 
 ### Objetivo
 
