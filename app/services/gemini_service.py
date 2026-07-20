@@ -17,36 +17,43 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 def preguntar_gemini(contexto, pregunta):
 
-    # Si el recuperador no encontró información,
-    # evitamos hacer una petición innecesaria a Gemini.
-    if not contexto.strip():
-        return "No encontré esa información dentro del documento."
-
     prompt = f"""
-Eres un asistente especializado en Lengua de Señas Mexicana (LSM).
+Eres un asistente especializado en Lengua de Señas Mexicana.
 
-Responde únicamente utilizando la información del CONTEXTO.
+Tu trabajo es responder únicamente utilizando el contexto proporcionado.
 
-Reglas:
-- No inventes información.
-- No uses conocimientos externos.
-- Si el contexto no contiene la respuesta, responde exactamente:
+Si la respuesta no aparece en el contexto responde exactamente:
+
 "No encontré esa información dentro del documento."
-- Responde de forma clara, breve y en español.
 
-========================
+======================
 CONTEXTO
-========================
+======================
 
 {contexto}
 
-========================
+======================
 PREGUNTA
-========================
+======================
 
 {pregunta}
 """
 
-    respuesta = model.generate_content(prompt)
+    try:
 
-    return respuesta.text.strip()
+        respuesta = model.generate_content(prompt)
+
+        return respuesta.text
+
+    except Exception as e:
+
+        if "429" in str(e):
+            return (
+                "⏳ El asistente ha recibido muchas solicitudes en un corto período de tiempo.\n\n"
+                "Por favor, espera aproximadamente un minuto e inténtalo nuevamente."
+            )
+
+        return (
+            "❌ Ocurrió un error al generar la respuesta.\n\n"
+            f"Detalle técnico: {e}"
+        )
